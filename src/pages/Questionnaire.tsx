@@ -6,13 +6,13 @@ import QuestionnaireFlow from '../components/questionnaire/QuestionnaireFlow';
 
 const Questionnaire = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/70">
       <Navbar />
       
       <main className="pt-20 animate-fade-in">
         <div className="container mx-auto px-4 py-10">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 text-3xl font-medium md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+            <h1 className="mb-4 text-3xl font-medium md:text-4xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 animate-pulse-soft">
               Trouvez votre bien idéal à Madagascar
             </h1>
             <p className="text-muted-foreground">
@@ -22,7 +22,7 @@ const Questionnaire = () => {
           </div>
           
           <div className="mt-10">
-            <div className="bg-card/80 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-border/40">
+            <div className="bg-card/50 backdrop-blur-sm rounded-xl shadow-lg p-6 border border-border/40 hover:shadow-xl transition-all duration-500">
               <QuestionnaireFlow />
             </div>
           </div>

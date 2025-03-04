@@ -1,5 +1,6 @@
+
 import React from 'react';
-import { House, Search, Bed, Bath, ParkingCircle, Trees, Shield, Zap, CloudSun, Wifi, MapPin, Coins, Users, CalendarDays, Building, Mountain } from 'lucide-react';
+import { House, Search, Bed, Bath, ParkingCircle, Trees, Shield, Zap, CloudSun, Wifi, MapPin, Coins, Users, CalendarDays, Building, Mountain, Car, Target, DollarSign, Droplets, School, ShoppingBag, Utensils, Hammer } from 'lucide-react';
 import { QuestionType } from './QuestionnaireContext';
 
 export const questions: QuestionType[] = [
@@ -37,6 +38,19 @@ export const questions: QuestionType[] = [
   },
   {
     id: 4,
+    question: "Quel quartier préférez-vous ?",
+    showIf: { questionId: 3, value: "antananarivo" },
+    options: [
+      { id: "analakely", label: "Analakely", icon: React.createElement(MapPin, { className: "h-6 w-6" }) },
+      { id: "ivandry", label: "Ivandry", icon: React.createElement(MapPin, { className: "h-6 w-6" }) },
+      { id: "andohalo", label: "Andohalo", icon: React.createElement(MapPin, { className: "h-6 w-6" }) },
+      { id: "ankadimbahoaka", label: "Ankadimbahoaka", icon: React.createElement(MapPin, { className: "h-6 w-6" }) },
+      { id: "amboditsiry", label: "Amboditsiry", icon: React.createElement(MapPin, { className: "h-6 w-6" }) },
+      { id: "autre_quartier", label: "Autre quartier", icon: React.createElement(MapPin, { className: "h-6 w-6" }) }
+    ]
+  },
+  {
+    id: 5,
     question: "Combien de chambres souhaitez-vous ?",
     options: [
       { id: "studio", label: "Studio", icon: React.createElement(Bed, { className: "h-6 w-6" }) },
@@ -47,7 +61,16 @@ export const questions: QuestionType[] = [
     ]
   },
   {
-    id: 5,
+    id: 6,
+    question: "Combien de salles de bain préférez-vous ?",
+    options: [
+      { id: "1", label: "1 salle de bain", icon: React.createElement(Bath, { className: "h-6 w-6" }) },
+      { id: "2", label: "2 salles de bain", icon: React.createElement(Bath, { className: "h-6 w-6" }) },
+      { id: "3+", label: "3+ salles de bain", icon: React.createElement(Bath, { className: "h-6 w-6" }) }
+    ]
+  },
+  {
+    id: 7,
     question: "Quand souhaitez-vous emménager/acheter ?",
     options: [
       { id: "immediatement", label: "Immédiatement", icon: React.createElement(CalendarDays, { className: "h-6 w-6" }) },
@@ -57,7 +80,18 @@ export const questions: QuestionType[] = [
     ]
   },
   {
-    id: 6,
+    id: 8,
+    question: "À quelle distance des commodités souhaitez-vous être ?",
+    options: [
+      { id: "pres_ecole", label: "Près d'une école", icon: React.createElement(School, { className: "h-6 w-6" }) },
+      { id: "pres_marche", label: "Près d'un marché", icon: React.createElement(ShoppingBag, { className: "h-6 w-6" }) },
+      { id: "pres_restaurant", label: "Près des restaurants", icon: React.createElement(Utensils, { className: "h-6 w-6" }) },
+      { id: "peu_importe", label: "Peu importe", icon: React.createElement(Target, { className: "h-6 w-6" }) }
+    ],
+    multiSelect: true
+  },
+  {
+    id: 9,
     question: "Quels sont les critères importants pour vous ?",
     options: [
       { id: "balcon", label: "Balcon/Terrasse", icon: React.createElement(CloudSun, { className: "h-6 w-6" }) },
@@ -66,12 +100,22 @@ export const questions: QuestionType[] = [
       { id: "calme", label: "Environnement calme", icon: React.createElement(CloudSun, { className: "h-6 w-6" }) },
       { id: "jardin", label: "Jardin", icon: React.createElement(Trees, { className: "h-6 w-6" }) },
       { id: "groupe_electrogene", label: "Groupe électrogène", icon: React.createElement(Zap, { className: "h-6 w-6" }) },
-      { id: "wifi", label: "Connexion internet", icon: React.createElement(Wifi, { className: "h-6 w-6" }) }
+      { id: "wifi", label: "Connexion internet", icon: React.createElement(Wifi, { className: "h-6 w-6" }) },
+      { id: "eau", label: "Accès à l'eau courante", icon: React.createElement(Droplets, { className: "h-6 w-6" }) }
     ],
     multiSelect: true
   },
   {
-    id: 7,
+    id: 10,
+    question: "Avez-vous besoin de rénovations ?",
+    options: [
+      { id: "pret_a_habiter", label: "Prêt à habiter", icon: React.createElement(House, { className: "h-6 w-6" }) },
+      { id: "petits_travaux", label: "Petits travaux", icon: React.createElement(Hammer, { className: "h-6 w-6" }) },
+      { id: "renovation_complete", label: "Rénovation complète", icon: React.createElement(Hammer, { className: "h-6 w-6" }) }
+    ]
+  },
+  {
+    id: 11,
     question: "Qui va occuper ce logement ?",
     options: [
       { id: "seul", label: "Juste moi", icon: React.createElement(Users, { className: "h-6 w-6" }) },
@@ -82,7 +126,7 @@ export const questions: QuestionType[] = [
     ]
   },
   {
-    id: 8,
+    id: 12,
     question: "Quel est votre budget maximum ?",
     options: [
       { id: "50000000", label: "< 50 millions Ar", icon: React.createElement(Coins, { className: "h-6 w-6" }) },
@@ -91,5 +135,15 @@ export const questions: QuestionType[] = [
       { id: "500000000", label: "< 500 millions Ar", icon: React.createElement(Coins, { className: "h-6 w-6" }) },
       { id: "500000000+", label: "> 500 millions Ar", icon: React.createElement(Coins, { className: "h-6 w-6" }) }
     ]
+  },
+  {
+    id: 13,
+    question: "Comment préférez-vous payer ?",
+    options: [
+      { id: "comptant", label: "Comptant", icon: React.createElement(DollarSign, { className: "h-6 w-6" }) },
+      { id: "credit", label: "Crédit", icon: React.createElement(DollarSign, { className: "h-6 w-6" }) },
+      { id: "echelonne", label: "Paiement échelonné", icon: React.createElement(DollarSign, { className: "h-6 w-6" }) }
+    ],
+    showIf: { questionId: 1, value: "acheter" }
   }
 ];

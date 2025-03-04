@@ -11,6 +11,7 @@ export type QuestionType = {
     icon?: React.ReactNode;
   }[];
   multiSelect?: boolean;
+  showIf?: { questionId: number; value: string };
 };
 
 // Types for answers

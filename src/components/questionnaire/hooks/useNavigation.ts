@@ -1,8 +1,14 @@
+
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuestionnaire } from '../QuestionnaireContext';
 import { questions } from '../QuestionnaireData';
-import { validateCurrentQuestion, isLastQuestion } from '../services/navigationService';
+import { 
+  validateCurrentQuestion, 
+  isLastQuestion, 
+  getNextQuestionIndex, 
+  getPreviousQuestionIndex 
+} from '../services/navigationService';
 
 export const useNavigation = () => {
   const navigate = useNavigate();
@@ -20,20 +26,22 @@ export const useNavigation = () => {
     }
     
     // If it's the last question, submit the form
-    if (isLastQuestion(currentQuestionIndex)) {
+    if (isLastQuestion(currentQuestionIndex, answers)) {
       handleSubmit();
       return;
     }
     
     // Otherwise, proceed to the next question
     setDirection('forward');
-    setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+    const nextIndex = getNextQuestionIndex(currentQuestionIndex, answers);
+    setCurrentQuestionIndex(nextIndex);
   };
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setDirection('backward');
-      setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+      const prevIndex = getPreviousQuestionIndex(currentQuestionIndex, answers);
+      setCurrentQuestionIndex(prevIndex);
     }
   };
 
@@ -58,6 +66,6 @@ export const useNavigation = () => {
     handleNextQuestion,
     handlePreviousQuestion,
     isAtFirstQuestion: currentQuestionIndex === 0,
-    isAtLastQuestion: isLastQuestion(currentQuestionIndex)
+    isAtLastQuestion: isLastQuestion(currentQuestionIndex, answers)
   };
 };

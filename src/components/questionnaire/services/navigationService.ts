@@ -25,6 +25,59 @@ export const validateCurrentQuestion = (
   return true;
 };
 
-export const isLastQuestion = (currentQuestionIndex: number): boolean => {
-  return currentQuestionIndex === questions.length - 1;
+export const getNextQuestionIndex = (
+  currentQuestionIndex: number,
+  answers: AnswersType
+): number => {
+  let nextIndex = currentQuestionIndex + 1;
+  
+  // If we've reached the end of the questions, return the current index
+  if (nextIndex >= questions.length) {
+    return currentQuestionIndex;
+  }
+  
+  // Check if the next question has a showIf condition
+  const nextQuestion = questions[nextIndex];
+  if (nextQuestion.showIf) {
+    const { questionId, value } = nextQuestion.showIf;
+    const answer = answers[questionId];
+    
+    // If the answer doesn't match the condition, skip this question
+    if (answer !== value) {
+      return getNextQuestionIndex(nextIndex, answers);
+    }
+  }
+  
+  return nextIndex;
+};
+
+export const getPreviousQuestionIndex = (
+  currentQuestionIndex: number,
+  answers: AnswersType
+): number => {
+  if (currentQuestionIndex <= 0) {
+    return 0;
+  }
+  
+  let prevIndex = currentQuestionIndex - 1;
+  
+  // Check if the previous question has a showIf condition
+  const prevQuestion = questions[prevIndex];
+  if (prevQuestion.showIf) {
+    const { questionId, value } = prevQuestion.showIf;
+    const answer = answers[questionId];
+    
+    // If the answer doesn't match the condition, skip this question
+    if (answer !== value) {
+      return getPreviousQuestionIndex(prevIndex, answers);
+    }
+  }
+  
+  return prevIndex;
+};
+
+export const isLastQuestion = (currentQuestionIndex: number, answers: AnswersType): boolean => {
+  // Check if this is the last visible question based on showIf conditions
+  const nextIndex = getNextQuestionIndex(currentQuestionIndex, answers);
+  return nextIndex === currentQuestionIndex;
 };
