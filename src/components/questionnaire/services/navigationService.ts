@@ -25,6 +25,35 @@ export const validateCurrentQuestion = (
   return true;
 };
 
+export const shouldShowQuestion = (question: any, answers: AnswersType): boolean => {
+  if (!question.showIf) return true;
+  
+  // If question has multiple conditions (array)
+  if (Array.isArray(question.showIf)) {
+    return question.showIf.some((condition: any) => {
+      const answer = answers[condition.questionId];
+      // For multi-select answers
+      if (Array.isArray(answer)) {
+        return answer.includes(condition.value);
+      }
+      // For single-select answers
+      return answer === condition.value;
+    });
+  }
+  
+  // For single condition
+  const { questionId, value } = question.showIf;
+  const answer = answers[questionId];
+  
+  // For multi-select answers
+  if (Array.isArray(answer)) {
+    return answer.includes(value);
+  }
+  
+  // For single-select answers
+  return answer === value;
+};
+
 export const getNextQuestionIndex = (
   currentQuestionIndex: number,
   answers: AnswersType
@@ -36,19 +65,17 @@ export const getNextQuestionIndex = (
     return currentQuestionIndex;
   }
   
-  // Check if the next question has a showIf condition
-  const nextQuestion = questions[nextIndex];
-  if (nextQuestion.showIf) {
-    const { questionId, value } = nextQuestion.showIf;
-    const answer = answers[questionId];
-    
-    // If the answer doesn't match the condition, skip this question
-    if (answer !== value) {
-      return getNextQuestionIndex(nextIndex, answers);
+  // Check if the next question should be shown based on conditions
+  while (nextIndex < questions.length) {
+    const nextQuestion = questions[nextIndex];
+    if (shouldShowQuestion(nextQuestion, answers)) {
+      return nextIndex;
     }
+    nextIndex++;
   }
   
-  return nextIndex;
+  // If no more questions should be shown, return the current index
+  return currentQuestionIndex;
 };
 
 export const getPreviousQuestionIndex = (
@@ -61,19 +88,16 @@ export const getPreviousQuestionIndex = (
   
   let prevIndex = currentQuestionIndex - 1;
   
-  // Check if the previous question has a showIf condition
-  const prevQuestion = questions[prevIndex];
-  if (prevQuestion.showIf) {
-    const { questionId, value } = prevQuestion.showIf;
-    const answer = answers[questionId];
-    
-    // If the answer doesn't match the condition, skip this question
-    if (answer !== value) {
-      return getPreviousQuestionIndex(prevIndex, answers);
+  // Check if the previous question should be shown based on conditions
+  while (prevIndex >= 0) {
+    const prevQuestion = questions[prevIndex];
+    if (shouldShowQuestion(prevQuestion, answers)) {
+      return prevIndex;
     }
+    prevIndex--;
   }
   
-  return prevIndex;
+  return 0;
 };
 
 export const isLastQuestion = (currentQuestionIndex: number, answers: AnswersType): boolean => {
