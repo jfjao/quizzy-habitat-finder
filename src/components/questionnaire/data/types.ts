@@ -55,4 +55,6 @@ export const icons = {
   Key: createIcon(Key),
   Star: createIcon(Star),
   ThumbsUp: createIcon(ThumbsUp),
+  FileCheck: createIcon(FileCheck),
+  FilePen: createIcon(FilePen),
 };
