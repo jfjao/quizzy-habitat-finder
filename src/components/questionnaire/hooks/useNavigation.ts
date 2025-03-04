@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuestionnaire } from '../QuestionnaireContext';
-import { questions } from '../QuestionnaireData';
+import { questions } from '../data';
 import { 
   validateCurrentQuestion, 
   isLastQuestion, 

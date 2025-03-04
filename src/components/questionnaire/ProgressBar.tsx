@@ -1,7 +1,7 @@
 
 import React, { useMemo } from 'react';
 import { useQuestionnaire } from './QuestionnaireContext';
-import { questions } from './QuestionnaireData';
+import { questions } from './data';
 import { shouldShowQuestion } from './services/navigationService';
 
 const ProgressBar = () => {

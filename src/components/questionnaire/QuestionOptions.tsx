@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useQuestionnaire } from './QuestionnaireContext';
-import { questions } from './QuestionnaireData';
+import { questions } from './data';
 import { toast } from "sonner";
 
 const QuestionOptions = () => {

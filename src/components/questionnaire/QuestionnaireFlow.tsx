@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { QuestionnaireProvider, useQuestionnaire } from './QuestionnaireContext';
 import ProgressBar from './ProgressBar';
 import QuestionOptions from './QuestionOptions';
 import NavigationButtons from './NavigationButtons';
-import { questions } from './QuestionnaireData';
+import { questions } from './data';
 
 // Get background class based on selected path
 const getBackgroundClass = (answers: any) => {

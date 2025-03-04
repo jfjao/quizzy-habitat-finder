@@ -1,6 +1,6 @@
 
 import { toast } from "sonner";
-import { questions } from '../QuestionnaireData';
+import { questions } from '../data';
 import { AnswersType, QuestionCondition } from '../QuestionnaireContext';
 
 export const validateCurrentQuestion = (
