@@ -1,7 +1,7 @@
 
 import { toast } from "sonner";
 import { questions } from '../QuestionnaireData';
-import { AnswersType } from '../QuestionnaireContext';
+import { AnswersType, QuestionCondition } from '../QuestionnaireContext';
 
 export const validateCurrentQuestion = (
   currentQuestionIndex: number, 
@@ -30,7 +30,7 @@ export const shouldShowQuestion = (question: any, answers: AnswersType): boolean
   
   // If question has multiple conditions (array)
   if (Array.isArray(question.showIf)) {
-    return question.showIf.some((condition: any) => {
+    return question.showIf.some((condition: QuestionCondition) => {
       const answer = answers[condition.questionId];
       // For multi-select answers
       if (Array.isArray(answer)) {
@@ -42,7 +42,7 @@ export const shouldShowQuestion = (question: any, answers: AnswersType): boolean
   }
   
   // For single condition
-  const { questionId, value } = question.showIf;
+  const { questionId, value } = question.showIf as QuestionCondition;
   const answer = answers[questionId];
   
   // For multi-select answers

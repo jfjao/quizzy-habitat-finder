@@ -3,7 +3,7 @@ import React from 'react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import QuestionnaireFlow from '../components/questionnaire/QuestionnaireFlow';
-import { useQuestionnaire } from '../components/questionnaire/QuestionnaireContext';
+import { QuestionnaireProvider, useQuestionnaire } from '../components/questionnaire/QuestionnaireContext';
 
 // Component to update title based on chosen path
 const DynamicTitle = () => {
@@ -73,8 +73,8 @@ const DynamicTitle = () => {
   );
 };
 
-// Questionnaire wrapper that provides the QuestionnaireProvider
-const QuestionnaireWrapper = () => {
+// QuestionnaireContent component that uses the context
+const QuestionnaireContent = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-secondary/70">
       <Navbar />
@@ -94,9 +94,13 @@ const QuestionnaireWrapper = () => {
   );
 };
 
+// Main component that provides the context
 const Questionnaire = () => {
-  // Return the wrapper component
-  return <QuestionnaireWrapper />;
+  return (
+    <QuestionnaireProvider>
+      <QuestionnaireContent />
+    </QuestionnaireProvider>
+  );
 };
 
 export default Questionnaire;

@@ -1,6 +1,12 @@
 
 import React, { createContext, useContext, useState } from 'react';
 
+// Define condition type
+export type QuestionCondition = {
+  questionId: number;
+  value: string;
+};
+
 // Types for questions
 export type QuestionType = {
   id: number;
@@ -11,7 +17,7 @@ export type QuestionType = {
     icon?: React.ReactNode;
   }[];
   multiSelect?: boolean;
-  showIf?: { questionId: number; value: string };
+  showIf?: QuestionCondition | QuestionCondition[];
 };
 
 // Types for answers
