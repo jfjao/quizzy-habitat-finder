@@ -21,6 +21,13 @@ const QuestionOptions = () => {
         : [...currentAnswers, optionId];
       
       setAnswers({ ...answers, [question.id]: newAnswers });
+      
+      // Show toast for multi-select options
+      if (!currentAnswers.includes(optionId)) {
+        toast.success(`Option ajoutée: ${question.options.find(o => o.id === optionId)?.label}`);
+      } else {
+        toast.info(`Option retirée: ${question.options.find(o => o.id === optionId)?.label}`);
+      }
     } else {
       // For single-select questions, replace the answer
       setAnswers({ ...answers, [question.id]: optionId });
@@ -30,6 +37,10 @@ const QuestionOptions = () => {
         const event = new CustomEvent('nextQuestion');
         document.dispatchEvent(event);
       }, 400);
+      
+      // Show toast for single-select options
+      const selectedLabel = question.options.find(o => o.id === optionId)?.label;
+      toast.success(`Vous avez choisi: ${selectedLabel}`);
     }
   };
 
@@ -44,32 +55,48 @@ const QuestionOptions = () => {
     return currentAnswers === optionId;
   };
 
+  // Direction-based animation classes
+  const getTransitionClass = () => {
+    if (direction === 'forward') {
+      return 'translate-x-0 opacity-100';
+    } else {
+      return '-translate-x-10 opacity-0';
+    }
+  };
+
   return (
-    <div className={`transform transition-all duration-500 ${
-      direction === 'forward' ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
-    }`}>
-      <h2 className="mb-8 text-2xl font-medium md:text-3xl">
+    <div className={`transform transition-all duration-500 ${getTransitionClass()}`}>
+      <h2 className="mb-8 text-2xl font-medium text-center md:text-3xl animate-fade-in">
         {currentQuestion.question}
       </h2>
       
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {currentQuestion.options.map((option) => (
+      <div className={`grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3`}>
+        {currentQuestion.options.map((option, index) => (
           <button
             key={option.id}
             onClick={() => handleOptionSelect(option.id)}
             className={`
-              flex flex-col items-center justify-center rounded-xl border border-border p-6 text-center transition-all duration-300
+              flex flex-col items-center justify-center rounded-xl border border-border p-6 text-center 
+              transition-all duration-300 hover-lift
               ${isOptionSelected(option.id) 
-                ? 'border-primary bg-primary/5 shadow-md' 
-                : 'hover:border-primary/50 hover:bg-secondary'}
+                ? 'border-primary bg-primary/5 shadow-md transform scale-105' 
+                : 'hover:border-primary/50 hover:bg-secondary hover:scale-105'}
+              animate-fade-in
             `}
+            style={{ animationDelay: `${index * 100}ms` }}
           >
             {option.icon && (
-              <div className={`mb-3 ${isOptionSelected(option.id) ? 'text-primary' : ''}`}>
+              <div className={`mb-3 transition-all duration-300 ${
+                isOptionSelected(option.id) 
+                  ? 'text-primary scale-110 transform' 
+                  : 'text-muted-foreground'
+              }`}>
                 {option.icon}
               </div>
             )}
-            <span className="font-medium">{option.label}</span>
+            <span className={`font-medium transition-all duration-300 ${
+              isOptionSelected(option.id) ? 'text-primary' : ''
+            }`}>{option.label}</span>
           </button>
         ))}
       </div>
