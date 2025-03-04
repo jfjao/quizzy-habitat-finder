@@ -14,7 +14,7 @@ const Hero = () => {
       <div className="container relative z-10 mx-auto flex flex-col items-center justify-center px-4 pt-20 text-center">
         <div className="animate-fade-in">
           <span className="mb-3 inline-block rounded-full bg-secondary px-3 py-1 text-xs font-medium">
-            Une nouvelle approche immobilière
+            Une nouvelle approche immobilière à Madagascar
           </span>
           
           <h1 className="mb-6 mt-4 text-4xl font-medium leading-tight tracking-tight md:text-5xl lg:text-6xl xl:text-7xl">
@@ -24,7 +24,7 @@ const Hero = () => {
           
           <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
             Notre questionnaire personnalisé analyse vos besoins réels pour vous proposer 
-            uniquement des biens qui correspondent à votre style de vie et vos aspirations.
+            uniquement des biens qui correspondent à votre style de vie et vos aspirations sur le marché malgache.
           </p>
           
           <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">

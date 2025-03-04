@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -44,18 +43,20 @@ const questions: QuestionType[] = [
     options: [
       { id: "appartement", label: "Appartement" },
       { id: "maison", label: "Maison" },
+      { id: "villa", label: "Villa" },
       { id: "terrain", label: "Terrain" },
       { id: "local_commercial", label: "Local commercial" }
     ]
   },
   {
     id: 3,
-    question: "Dans quelle ville ou région ?",
+    question: "Dans quelle ville ou région de Madagascar ?",
     options: [
-      { id: "paris", label: "Paris" },
-      { id: "lyon", label: "Lyon" },
-      { id: "marseille", label: "Marseille" },
-      { id: "bordeaux", label: "Bordeaux" },
+      { id: "antananarivo", label: "Antananarivo" },
+      { id: "tamatave", label: "Tamatave" },
+      { id: "nosy_be", label: "Nosy Be" },
+      { id: "mahajanga", label: "Mahajanga" },
+      { id: "diego_suarez", label: "Diego Suarez" },
       { id: "autre", label: "Autre" }
     ]
   },
@@ -65,9 +66,10 @@ const questions: QuestionType[] = [
     options: [
       { id: "balcon", label: "Balcon/Terrasse" },
       { id: "parking", label: "Parking" },
-      { id: "metro", label: "Proche métro" },
+      { id: "securite", label: "Sécurité/Gardiennage" },
       { id: "calme", label: "Environnement calme" },
-      { id: "jardin", label: "Jardin" }
+      { id: "jardin", label: "Jardin" },
+      { id: "groupe_electrogene", label: "Groupe électrogène" }
     ],
     multiSelect: true
   },
@@ -75,11 +77,11 @@ const questions: QuestionType[] = [
     id: 5,
     question: "Quel est votre budget maximum ?",
     options: [
-      { id: "100000", label: "< 100 000 €" },
-      { id: "200000", label: "< 200 000 €" },
-      { id: "300000", label: "< 300 000 €" },
-      { id: "500000", label: "< 500 000 €" },
-      { id: "1000000", label: "> 500 000 €" }
+      { id: "50000000", label: "< 50 millions Ar" },
+      { id: "100000000", label: "< 100 millions Ar" },
+      { id: "200000000", label: "< 200 millions Ar" },
+      { id: "500000000", label: "< 500 millions Ar" },
+      { id: "500000000+", label: "> 500 millions Ar" }
     ]
   }
 ];

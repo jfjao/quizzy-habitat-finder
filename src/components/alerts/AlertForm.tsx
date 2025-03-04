@@ -25,7 +25,7 @@ const AlertForm = ({ criteria }: AlertFormProps) => {
     
     // Simuler l'envoi de la demande d'alerte
     setTimeout(() => {
-      toast.success("Alerte créée avec succès ! Vous serez informé dès qu'un bien correspondant sera disponible.");
+      toast.success("Alerte créée avec succès ! Vous serez informé dès qu'un bien correspondant sera disponible à Madagascar.");
       setIsSubmitting(false);
       setEmail('');
       setName('');
@@ -41,7 +41,7 @@ const AlertForm = ({ criteria }: AlertFormProps) => {
         <div>
           <h3 className="text-lg font-medium">Créez une alerte</h3>
           <p className="text-sm text-muted-foreground">
-            Soyez informé dès qu'un bien correspondant à vos critères sera disponible.
+            Soyez informé dès qu'un bien correspondant à vos critères sera disponible à Madagascar.
           </p>
         </div>
       </div>

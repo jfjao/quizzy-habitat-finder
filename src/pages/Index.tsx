@@ -11,10 +11,10 @@ import { ArrowRight } from 'lucide-react';
 const featuredProperties = [
   {
     id: 1,
-    title: "Appartement lumineux avec terrasse",
+    title: "Appartement lumineux avec balcon",
     type: "Appartement",
-    location: "Paris, 11ème",
-    price: 450000,
+    location: "Antananarivo, Ivandry",
+    price: 450000000,
     area: 65,
     rooms: 3,
     bathrooms: 1,
@@ -22,10 +22,10 @@ const featuredProperties = [
   },
   {
     id: 2,
-    title: "Maison de ville avec jardin",
-    type: "Maison",
-    location: "Lyon, 5ème",
-    price: 620000,
+    title: "Villa avec jardin",
+    type: "Villa",
+    location: "Antananarivo, Ambatobe",
+    price: 620000000,
     area: 120,
     rooms: 5,
     bathrooms: 2,
@@ -33,10 +33,10 @@ const featuredProperties = [
   },
   {
     id: 3,
-    title: "Loft dans ancien atelier",
-    type: "Loft",
-    location: "Bordeaux Centre",
-    price: 380000,
+    title: "Bungalow près de la plage",
+    type: "Maison",
+    location: "Nosy Be, Ambatoloaka",
+    price: 380000000,
     area: 85,
     rooms: 2,
     bathrooms: 1,
@@ -57,7 +57,7 @@ const Index = () => {
             <div className="mb-10 flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-medium md:text-3xl">Biens en vedette</h2>
-                <p className="mt-2 text-muted-foreground">Découvrez nos propriétés coup de cœur</p>
+                <p className="mt-2 text-muted-foreground">Découvrez nos propriétés coup de cœur à Madagascar</p>
               </div>
               
               <Link 
@@ -81,12 +81,12 @@ const Index = () => {
               </span>
               
               <h2 className="mb-6 text-2xl font-medium md:text-3xl">
-                Une nouvelle façon de trouver votre bien immobilier
+                Une nouvelle façon de trouver votre bien immobilier à Madagascar
               </h2>
               
               <p className="mb-10 text-muted-foreground">
                 Notre questionnaire interactif analyse vos besoins réels pour vous faire gagner du temps 
-                et vous proposer uniquement les biens qui correspondent vraiment à vos attentes.
+                et vous proposer uniquement les biens qui correspondent vraiment à vos attentes sur le marché malgache.
               </p>
               
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">

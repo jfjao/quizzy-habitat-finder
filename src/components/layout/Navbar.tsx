@@ -14,7 +14,7 @@ const Navbar = () => {
               className="flex items-center space-x-2 transition-transform duration-300 hover:scale-105"
             >
               <House className="h-6 w-6" />
-              <span className="text-xl font-medium tracking-tight">Immobilier</span>
+              <span className="text-xl font-medium tracking-tight">Trano Tsara</span>
             </Link>
             
             <nav>
