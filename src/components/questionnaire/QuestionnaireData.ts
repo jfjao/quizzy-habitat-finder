@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { House, Search, Bed, Bath, ParkingCircle, Tree, Shield, Zap, CloudSun, Wifi, MapPin, Coins, Users, CalendarDays, Building, Mountain } from 'lucide-react';
+import { House, Search, Bed, Bath, ParkingCircle, Trees, Shield, Zap, CloudSun, Wifi, MapPin, Coins, Users, CalendarDays, Building, Mountain } from 'lucide-react';
 import { QuestionType } from './QuestionnaireContext';
 
 export const questions: QuestionType[] = [
@@ -20,7 +19,7 @@ export const questions: QuestionType[] = [
       { id: "appartement", label: "Appartement", icon: React.createElement(Building, { className: "h-6 w-6" }) },
       { id: "maison", label: "Maison", icon: React.createElement(House, { className: "h-6 w-6" }) },
       { id: "villa", label: "Villa", icon: React.createElement(House, { className: "h-6 w-6" }) },
-      { id: "terrain", label: "Terrain", icon: React.createElement(Tree, { className: "h-6 w-6" }) },
+      { id: "terrain", label: "Terrain", icon: React.createElement(Trees, { className: "h-6 w-6" }) },
       { id: "local_commercial", label: "Local commercial", icon: React.createElement(Building, { className: "h-6 w-6" }) }
     ]
   },
@@ -65,7 +64,7 @@ export const questions: QuestionType[] = [
       { id: "parking", label: "Parking", icon: React.createElement(ParkingCircle, { className: "h-6 w-6" }) },
       { id: "securite", label: "Sécurité/Gardiennage", icon: React.createElement(Shield, { className: "h-6 w-6" }) },
       { id: "calme", label: "Environnement calme", icon: React.createElement(CloudSun, { className: "h-6 w-6" }) },
-      { id: "jardin", label: "Jardin", icon: React.createElement(Tree, { className: "h-6 w-6" }) },
+      { id: "jardin", label: "Jardin", icon: React.createElement(Trees, { className: "h-6 w-6" }) },
       { id: "groupe_electrogene", label: "Groupe électrogène", icon: React.createElement(Zap, { className: "h-6 w-6" }) },
       { id: "wifi", label: "Connexion internet", icon: React.createElement(Wifi, { className: "h-6 w-6" }) }
     ],
