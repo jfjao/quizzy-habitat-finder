@@ -1,12 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import { ArrowLeft, Heart, Share2, MapPin } from 'lucide-react';
 import { PropertyType } from '../components/properties/PropertyCard';
 import AlertForm from '../components/alerts/AlertForm';
 import { toast } from 'sonner';
+import { Layout } from '../components/layout/Layout';
+import { formatAriary } from '../utils/formatters';
 
 // Données fictives
 const allProperties = [
@@ -15,7 +14,7 @@ const allProperties = [
     title: "Appartement lumineux avec terrasse",
     type: "Appartement",
     location: "Paris, 11ème",
-    price: 450000,
+    price: 450000000,
     area: 65,
     rooms: 3,
     bathrooms: 1,
@@ -28,7 +27,7 @@ const allProperties = [
     title: "Maison de ville avec jardin",
     type: "Maison",
     location: "Lyon, 5ème",
-    price: 620000,
+    price: 620000000,
     area: 120,
     rooms: 5,
     bathrooms: 2,
@@ -41,7 +40,7 @@ const allProperties = [
     title: "Loft dans ancien atelier",
     type: "Loft",
     location: "Bordeaux Centre",
-    price: 380000,
+    price: 380000000,
     area: 85,
     rooms: 2,
     bathrooms: 1,
@@ -54,7 +53,7 @@ const allProperties = [
     title: "Appartement rénové proche métro",
     type: "Appartement",
     location: "Paris, 9ème",
-    price: 520000,
+    price: 520000000,
     area: 75,
     rooms: 3,
     bathrooms: 1,
@@ -67,7 +66,7 @@ const allProperties = [
     title: "Duplex avec vue panoramique",
     type: "Appartement",
     location: "Marseille, 7ème",
-    price: 420000,
+    price: 420000000,
     area: 90,
     rooms: 4,
     bathrooms: 2,
@@ -80,7 +79,7 @@ const allProperties = [
     title: "Studio étudiant rénové",
     type: "Studio",
     location: "Lyon, 8ème",
-    price: 120000,
+    price: 120000000,
     area: 28,
     rooms: 1,
     bathrooms: 1,
@@ -97,7 +96,6 @@ const PropertyDetail = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   
   useEffect(() => {
-    // Simuler la récupération des données depuis une API
     setIsLoading(true);
     
     setTimeout(() => {
@@ -113,28 +111,24 @@ const PropertyDetail = () => {
   };
 
   const handleShare = () => {
-    // En production, utiliser l'API navigator.share si disponible
     toast.success("Lien copié dans le presse-papier!");
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen">
-        <Navbar />
+      <Layout>
         <main className="pt-20">
           <div className="container mx-auto flex h-96 items-center justify-center px-4">
             <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary"></div>
           </div>
         </main>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
   if (!property) {
     return (
-      <div className="min-h-screen">
-        <Navbar />
+      <Layout>
         <main className="pt-20">
           <div className="container mx-auto px-4 py-10">
             <div className="rounded-xl border border-border bg-card p-10 text-center">
@@ -151,18 +145,14 @@ const PropertyDetail = () => {
             </div>
           </div>
         </main>
-        <Footer />
-      </div>
+      </Layout>
     );
   }
 
-  // @ts-ignore - Type étendu dans les données fictives
   const { title, type, location, price, area, rooms, bathrooms, imageUrl, description, features } = property;
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
+    <Layout>
       <main className="pt-20">
         <div className="container mx-auto px-4 py-10">
           <div className="mb-6 flex items-center">
@@ -199,8 +189,8 @@ const PropertyDetail = () => {
                 </div>
                 
                 <div className="text-right">
-                  <div className="text-2xl font-medium text-primary">{price.toLocaleString('fr-FR')} €</div>
-                  <div className="text-sm text-muted-foreground">soit {Math.round(price/area).toLocaleString('fr-FR')} €/m²</div>
+                  <div className="text-2xl font-medium text-primary">{formatAriary(price)}</div>
+                  <div className="text-sm text-muted-foreground">soit {formatAriary(Math.round(price/area))}/m²</div>
                 </div>
               </div>
               
@@ -329,9 +319,7 @@ const PropertyDetail = () => {
           </div>
         </div>
       </main>
-      
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

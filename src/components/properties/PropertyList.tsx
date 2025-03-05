@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PropertyCard, { PropertyType } from './PropertyCard';
 import { Info, Search } from 'lucide-react';

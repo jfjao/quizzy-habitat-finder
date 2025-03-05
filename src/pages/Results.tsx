@@ -1,12 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import PropertyList from '../components/properties/PropertyList';
 import AlertForm from '../components/alerts/AlertForm';
 import { PropertyType } from '../components/properties/PropertyCard';
 import { ArrowLeft } from 'lucide-react';
+import { Layout } from '../components/layout/Layout';
 
 // Données fictives pour simuler une API
 const allProperties = [
@@ -15,7 +13,7 @@ const allProperties = [
     title: "Appartement lumineux avec terrasse",
     type: "Appartement",
     location: "Paris, 11ème",
-    price: 450000,
+    price: 450000000,
     area: 65,
     rooms: 3,
     bathrooms: 1,
@@ -26,7 +24,7 @@ const allProperties = [
     title: "Maison de ville avec jardin",
     type: "Maison",
     location: "Lyon, 5ème",
-    price: 620000,
+    price: 620000000,
     area: 120,
     rooms: 5,
     bathrooms: 2,
@@ -37,7 +35,7 @@ const allProperties = [
     title: "Loft dans ancien atelier",
     type: "Loft",
     location: "Bordeaux Centre",
-    price: 380000,
+    price: 380000000,
     area: 85,
     rooms: 2,
     bathrooms: 1,
@@ -48,7 +46,7 @@ const allProperties = [
     title: "Appartement rénové proche métro",
     type: "Appartement",
     location: "Paris, 9ème",
-    price: 520000,
+    price: 520000000,
     area: 75,
     rooms: 3,
     bathrooms: 1,
@@ -59,7 +57,7 @@ const allProperties = [
     title: "Duplex avec vue panoramique",
     type: "Appartement",
     location: "Marseille, 7ème",
-    price: 420000,
+    price: 420000000,
     area: 90,
     rooms: 4,
     bathrooms: 2,
@@ -70,7 +68,7 @@ const allProperties = [
     title: "Studio étudiant rénové",
     type: "Studio",
     location: "Lyon, 8ème",
-    price: 120000,
+    price: 120000000,
     area: 28,
     rooms: 1,
     bathrooms: 1,
@@ -85,24 +83,18 @@ const Results = () => {
   const answers = location.state?.answers || {};
   
   useEffect(() => {
-    // Simuler le chargement depuis une API
     setIsLoading(true);
     
     setTimeout(() => {
-      // Filtrer les propriétés en fonction des réponses
-      // C'est ici qu'on implémenterait une vraie logique de filtrage basée sur les réponses
-      const typeAnswer = answers[2]; // Réponse à la question sur le type de bien
-      const locationAnswer = answers[3]; // Réponse à la question sur la ville
-      const budgetAnswer = answers[5]; // Réponse à la question sur le budget
+      const typeAnswer = answers[2];
+      const locationAnswer = answers[3];
+      const budgetAnswer = answers[5];
       
-      // Exemple très simple de filtrage
       let filtered = [...allProperties];
       
-      // Exemple: Si aucun critère n'est sélectionné, retourner 0 résultat pour montrer l'état vide
       if (Object.keys(answers).length === 0) {
         filtered = [];
       }
-      // Très simple filtrage basé sur une ville - juste pour l'exemple
       else if (locationAnswer === "paris") {
         filtered = allProperties.filter(p => p.location.toLowerCase().includes("paris"));
       }
@@ -122,9 +114,7 @@ const Results = () => {
   }, [answers]);
 
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
+    <Layout>
       <main className="pt-20">
         <div className="container mx-auto px-4 py-10">
           <div className="mb-10 flex items-center">
@@ -156,9 +146,7 @@ const Results = () => {
           )}
         </div>
       </main>
-      
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

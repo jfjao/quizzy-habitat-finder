@@ -2,6 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
+import { formatAriary } from '../../utils/formatters';
 
 export type PropertyType = {
   id: number;
@@ -61,7 +62,7 @@ const PropertyCard = ({ property, onFavoriteToggle }: PropertyCardProps) => {
           <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium">
             {type}
           </span>
-          <span className="font-medium text-primary">{price.toLocaleString('fr-FR')} €</span>
+          <span className="font-medium text-primary">{formatAriary(price)}</span>
         </div>
         
         <h3 className="mb-1 text-lg font-medium leading-tight">{title}</h3>

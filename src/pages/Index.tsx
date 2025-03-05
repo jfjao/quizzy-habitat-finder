@@ -2,8 +2,7 @@
 import React from 'react';
 import Hero from '../components/home/Hero';
 import PropertyList from '../components/properties/PropertyList';
-import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
+import { Layout } from '../components/layout/Layout';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
@@ -46,9 +45,7 @@ const featuredProperties = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
-      
+    <Layout>
       <main className="pt-16">
         <Hero />
         
@@ -134,9 +131,7 @@ const Index = () => {
           </div>
         </section>
       </main>
-      
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

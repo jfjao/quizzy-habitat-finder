@@ -4,14 +4,14 @@
 export const getMockNeighborhoodPrices = (propertyType: string) => {
   // Simulation de données différentes selon le type de bien
   const baseData = [
-    { id: '1', name: 'Centre-Ville', price: 4500, transactions: 45 },
-    { id: '2', name: 'Analakely', price: 3800, transactions: 32 },
-    { id: '3', name: 'Antanimena', price: 3200, transactions: 28 },
-    { id: '4', name: 'Isoraka', price: 4200, transactions: 21 },
-    { id: '5', name: 'Andraharo', price: 3900, transactions: 38 },
-    { id: '6', name: 'Ankorondrano', price: 4100, transactions: 43 },
-    { id: '7', name: 'Ivandry', price: 4300, transactions: 26 },
-    { id: '8', name: 'Ambatobe', price: 3600, transactions: 19 },
+    { id: '1', name: 'Centre-Ville', price: 4500000, transactions: 45 },
+    { id: '2', name: 'Analakely', price: 3800000, transactions: 32 },
+    { id: '3', name: 'Antanimena', price: 3200000, transactions: 28 },
+    { id: '4', name: 'Isoraka', price: 4200000, transactions: 21 },
+    { id: '5', name: 'Andraharo', price: 3900000, transactions: 38 },
+    { id: '6', name: 'Ankorondrano', price: 4100000, transactions: 43 },
+    { id: '7', name: 'Ivandry', price: 4300000, transactions: 26 },
+    { id: '8', name: 'Ambatobe', price: 3600000, transactions: 19 },
   ];
 
   // Variation des prix selon le type de propriété
@@ -42,14 +42,14 @@ export const getMockNeighborhoodPrices = (propertyType: string) => {
 export const getMockActiveNeighborhoods = (propertyType: string) => {
   // Données de base
   const baseData = [
-    { id: '1', name: 'Centre-Ville', transactions: 45, pricePerSqm: 4500, trend: 'up' as const },
-    { id: '2', name: 'Analakely', transactions: 32, pricePerSqm: 3800, trend: 'down' as const },
-    { id: '3', name: 'Antanimena', transactions: 28, pricePerSqm: 3200, trend: 'stable' as const },
-    { id: '4', name: 'Isoraka', transactions: 21, pricePerSqm: 4200, trend: 'up' as const },
-    { id: '5', name: 'Andraharo', transactions: 38, pricePerSqm: 3900, trend: 'up' as const },
-    { id: '6', name: 'Ankorondrano', transactions: 43, pricePerSqm: 4100, trend: 'stable' as const },
-    { id: '7', name: 'Ivandry', transactions: 26, pricePerSqm: 4300, trend: 'down' as const },
-    { id: '8', name: 'Ambatobe', transactions: 19, pricePerSqm: 3600, trend: 'up' as const },
+    { id: '1', name: 'Centre-Ville', transactions: 45, pricePerSqm: 4500000, trend: 'up' as const },
+    { id: '2', name: 'Analakely', transactions: 32, pricePerSqm: 3800000, trend: 'down' as const },
+    { id: '3', name: 'Antanimena', transactions: 28, pricePerSqm: 3200000, trend: 'stable' as const },
+    { id: '4', name: 'Isoraka', transactions: 21, pricePerSqm: 4200000, trend: 'up' as const },
+    { id: '5', name: 'Andraharo', transactions: 38, pricePerSqm: 3900000, trend: 'up' as const },
+    { id: '6', name: 'Ankorondrano', transactions: 43, pricePerSqm: 4100000, trend: 'stable' as const },
+    { id: '7', name: 'Ivandry', transactions: 26, pricePerSqm: 4300000, trend: 'down' as const },
+    { id: '8', name: 'Ambatobe', transactions: 19, pricePerSqm: 3600000, trend: 'up' as const },
   ];
 
   // Variation selon le type de propriété
@@ -103,22 +103,22 @@ export const getMockPriceHistory = (timeFrame: string, propertyType: string) => 
   }
 
   // Prix de base qui varie selon le type de propriété
-  let basePrice = 4000;
+  let basePrice = 4000000;
   switch (propertyType) {
     case 'apartment':
-      basePrice = 4200;
+      basePrice = 4200000;
       break;
     case 'house':
-      basePrice = 3800;
+      basePrice = 3800000;
       break;
     case 'villa':
-      basePrice = 5500;
+      basePrice = 5500000;
       break;
     case 'land':
-      basePrice = 2500;
+      basePrice = 2500000;
       break;
     default:
-      basePrice = 4000;
+      basePrice = 4000000;
   }
 
   // Génération des données historiques
