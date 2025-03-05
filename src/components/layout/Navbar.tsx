@@ -1,9 +1,15 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { House } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { House, MapPin } from 'lucide-react';
 
 const Navbar = () => {
+  const location = useLocation();
+  
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
+  
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <div className="glass border-b border-slate-200/10 backdrop-blur-md">
@@ -22,15 +28,32 @@ const Navbar = () => {
                 <li>
                   <Link 
                     to="/questionnaire" 
-                    className="relative py-2 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                    className={`relative py-2 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
+                      isActive('/questionnaire') ? 'after:w-full' : 'after:w-0'
+                    }`}
                   >
                     Trouver un bien
                   </Link>
                 </li>
                 <li>
                   <Link 
+                    to="/prix-au-m2" 
+                    className={`relative py-2 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
+                      isActive('/prix-au-m2') ? 'after:w-full' : 'after:w-0'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      Prix au m²
+                    </div>
+                  </Link>
+                </li>
+                <li>
+                  <Link 
                     to="/about" 
-                    className="relative py-2 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                    className={`relative py-2 text-sm font-medium after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full ${
+                      isActive('/about') ? 'after:w-full' : 'after:w-0'
+                    }`}
                   >
                     À propos
                   </Link>
