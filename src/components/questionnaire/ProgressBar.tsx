@@ -9,17 +9,37 @@ const ProgressBar = () => {
   
   // Calculate visible questions based on current answers
   const visibleQuestions = useMemo(() => {
+    // For the first question, we don't know the path yet, so we need to show a different calculation
+    if (currentQuestionIndex === 0) {
+      // Just return first question for now since user hasn't made any selections yet
+      return [questions[0]];
+    }
+    
+    // After first question is answered, calculate based on selected path
     return questions.filter(question => shouldShowQuestion(question, answers));
-  }, [answers]);
+  }, [answers, currentQuestionIndex]);
   
+  // Find the index of the current question in the visible questions array
   const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === questions[currentQuestionIndex].id);
+  
+  // Calculate total visible questions based on path selected
   const totalVisibleQuestions = visibleQuestions.length;
-  const progress = totalVisibleQuestions > 0 ? ((currentVisibleIndex + 1) / totalVisibleQuestions) * 100 : 0;
+  
+  // Calculate progress percentage
+  const progress = totalVisibleQuestions > 0 
+    ? ((currentVisibleIndex + 1) / totalVisibleQuestions) * 100 
+    : 0;
 
+  // Format for display
+  const questionNumber = currentVisibleIndex + 1;
+  const totalQuestions = totalVisibleQuestions;
+  
   return (
     <div className="mb-10">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-sm font-medium">Question {currentVisibleIndex + 1}/{totalVisibleQuestions}</span>
+        <span className="text-sm font-medium">
+          Question {questionNumber}/{totalQuestions}
+        </span>
         <span className="text-sm font-medium">{Math.round(progress)}%</span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
