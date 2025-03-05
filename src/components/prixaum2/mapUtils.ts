@@ -63,3 +63,133 @@ export const createPolygon = (centerLng: number, centerLat: number, radius: numb
 export const formatPrice = (price: number): string => {
   return new Intl.NumberFormat('fr-FR').format(price);
 };
+
+// Nouvelle fonction pour créer des caractéristiques GeoJSON à partir des quartiers
+export const createNeighborhoodFeatures = (neighborhoods: Neighborhood[]): NeighborhoodGeoJSONFeature[] => {
+  return neighborhoods.map((neighborhood) => {
+    // Créer des coordonnées aléatoires autour du centre d'Antananarivo pour la simulation
+    const randomLng = CENTER_COORDINATES[0] + (Math.random() - 0.5) * 0.1;
+    const randomLat = CENTER_COORDINATES[1] + (Math.random() - 0.5) * 0.1;
+    
+    // Créer un polygone simple pour représenter le quartier
+    return {
+      type: "Feature",
+      properties: {
+        id: neighborhood.id,
+        name: neighborhood.name,
+        price: neighborhood.price,
+        transactions: neighborhood.transactions,
+        color: getPriceColor(neighborhood.price, neighborhoods)
+      },
+      geometry: {
+        type: "Polygon",
+        coordinates: [createPolygon(randomLng, randomLat, 0.01 + Math.random() * 0.02)]
+      }
+    };
+  });
+};
+
+// Configuration des couches de carte
+export const setupMapLayers = (map: mapboxgl.Map, features: NeighborhoodGeoJSONFeature[]) => {
+  // Ajouter la source de données
+  map.addSource('neighborhoods', {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features
+    }
+  });
+
+  // Ajouter la couche de remplissage
+  map.addLayer({
+    id: 'neighborhood-fills',
+    type: 'fill',
+    source: 'neighborhoods',
+    paint: {
+      'fill-color': ['get', 'color'],
+      'fill-opacity': 0.6
+    }
+  });
+
+  // Ajouter la couche de contour
+  map.addLayer({
+    id: 'neighborhood-borders',
+    type: 'line',
+    source: 'neighborhoods',
+    paint: {
+      'line-color': '#000',
+      'line-width': 1
+    }
+  });
+
+  // Ajouter la couche d'étiquettes
+  map.addLayer({
+    id: 'neighborhood-labels',
+    type: 'symbol',
+    source: 'neighborhoods',
+    layout: {
+      'text-field': ['get', 'name'],
+      'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+      'text-size': 12
+    },
+    paint: {
+      'text-color': '#333',
+      'text-halo-color': '#fff',
+      'text-halo-width': 1
+    }
+  });
+};
+
+// Configuration des interactions de la carte
+export const setupMapInteractions = (
+  map: mapboxgl.Map, 
+  neighborhoods: Neighborhood[],
+  onSelectNeighborhood: (neighborhood: Neighborhood | null) => void
+) => {
+  // Ajouter des interactions
+  map.on('click', 'neighborhood-fills', (e) => {
+    if (!e.features || e.features.length === 0) return;
+    
+    const properties = e.features[0].properties;
+    const neighborhood = neighborhoods.find(n => n.id === properties.id);
+    
+    if (neighborhood) {
+      onSelectNeighborhood(neighborhood);
+      
+      // Créer une popup
+      new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(`
+          <div class="p-2">
+            <h3 class="font-bold text-sm">${neighborhood.name}</h3>
+            <p class="text-xs mt-1">Prix moyen: ${formatPrice(neighborhood.price)} Ar/m²</p>
+            <p class="text-xs">Transactions: ${neighborhood.transactions}</p>
+          </div>
+        `)
+        .addTo(map);
+    }
+  });
+
+  // Changer le curseur au survol
+  map.on('mouseenter', 'neighborhood-fills', () => {
+    map.getCanvas().style.cursor = 'pointer';
+  });
+  
+  map.on('mouseleave', 'neighborhood-fills', () => {
+    map.getCanvas().style.cursor = '';
+  });
+};
+
+// Mise à jour des données de quartier sur la carte
+export const updateMapData = (map: mapboxgl.Map, neighborhoods: Neighborhood[]) => {
+  if (!map.getSource('neighborhoods')) return;
+  
+  // Mettre à jour les propriétés des polygones
+  const features = createNeighborhoodFeatures(neighborhoods);
+
+  // Mettre à jour la source de données
+  (map.getSource('neighborhoods') as mapboxgl.GeoJSONSource).setData({
+    type: 'FeatureCollection',
+    features
+  });
+};
