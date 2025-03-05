@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Heart } from 'lucide-react';
@@ -15,6 +14,8 @@ export type PropertyType = {
   bathrooms: number;
   imageUrl: string;
   favorite?: boolean;
+  description?: string;
+  features?: string[];
 };
 
 interface PropertyCardProps {
