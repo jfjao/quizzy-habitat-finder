@@ -1,3 +1,4 @@
+import mapboxgl from 'mapbox-gl';
 
 // Types
 export interface Neighborhood {
