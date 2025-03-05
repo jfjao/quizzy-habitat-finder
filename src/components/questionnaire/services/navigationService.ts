@@ -26,31 +26,39 @@ export const validateCurrentQuestion = (
 };
 
 export const shouldShowQuestion = (question: any, answers: AnswersType): boolean => {
+  // Si nous sommes à la première question ou si la question n'a pas de condition showIf
   if (!question.showIf) return true;
   
-  // If question has multiple conditions (array)
+  // Cas particulier pour la première question
+  if (Object.keys(answers).length === 0) {
+    // Pour les questions qui ont une condition sur la première question
+    // Comme l'utilisateur n'a pas encore répondu, nous assumons qu'elles pourraient être visibles
+    return true;
+  }
+  
+  // Si la question a plusieurs conditions (tableau)
   if (Array.isArray(question.showIf)) {
     return question.showIf.some((condition: QuestionCondition) => {
       const answer = answers[condition.questionId];
-      // For multi-select answers
+      // Pour les réponses multi-select
       if (Array.isArray(answer)) {
         return answer.includes(condition.value);
       }
-      // For single-select answers
+      // Pour les réponses single-select
       return answer === condition.value;
     });
   }
   
-  // For single condition
+  // Pour une seule condition
   const { questionId, value } = question.showIf as QuestionCondition;
   const answer = answers[questionId];
   
-  // For multi-select answers
+  // Pour les réponses multi-select
   if (Array.isArray(answer)) {
     return answer.includes(value);
   }
   
-  // For single-select answers
+  // Pour les réponses single-select
   return answer === value;
 };
 

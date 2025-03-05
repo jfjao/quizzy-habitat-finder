@@ -9,28 +9,35 @@ const ProgressBar = () => {
   
   // Calculate visible questions based on current answers
   const visibleQuestions = useMemo(() => {
-    // For the first question, we don't know the path yet, so we need to show a different calculation
+    // Pour la première question, nous devons calculer différemment
     if (currentQuestionIndex === 0) {
-      // Just return first question for now since user hasn't made any selections yet
-      return [questions[0]];
+      // Estimer le nombre total de questions basé sur le chemin "acheter" (par défaut)
+      // Car l'utilisateur n'a pas encore fait de sélection
+      let estimatedTotal = questions.filter(q => 
+        !q.showIf || 
+        (typeof q.showIf === 'object' && 'questionId' in q.showIf && q.showIf.questionId === 1 && q.showIf.value === "acheter") ||
+        (Array.isArray(q.showIf) && q.showIf.some(cond => cond.questionId === 1 && cond.value === "acheter"))
+      );
+      
+      return [questions[0], ...estimatedTotal.filter(q => q.id !== 1)];
     }
     
-    // After first question is answered, calculate based on selected path
+    // Après la première question, calculer en fonction du choix de l'utilisateur
     return questions.filter(question => shouldShowQuestion(question, answers));
   }, [answers, currentQuestionIndex]);
   
-  // Find the index of the current question in the visible questions array
+  // Trouver l'index de la question actuelle dans le tableau des questions visibles
   const currentVisibleIndex = visibleQuestions.findIndex(q => q.id === questions[currentQuestionIndex].id);
   
-  // Calculate total visible questions based on path selected
+  // Calculer le nombre total de questions visibles en fonction du chemin sélectionné
   const totalVisibleQuestions = visibleQuestions.length;
   
-  // Calculate progress percentage
+  // Calculer le pourcentage de progression
   const progress = totalVisibleQuestions > 0 
     ? ((currentVisibleIndex + 1) / totalVisibleQuestions) * 100 
     : 0;
 
-  // Format for display
+  // Formater pour l'affichage
   const questionNumber = currentVisibleIndex + 1;
   const totalQuestions = totalVisibleQuestions;
   
@@ -38,14 +45,14 @@ const ProgressBar = () => {
     <div className="mb-10">
       <div className="flex items-center justify-between mb-2">
         <span className="text-sm font-medium">
-          Question {questionNumber}/{totalQuestions}
+          Question {questionNumber}/{totalQuestions > 1 ? totalQuestions : '?'}
         </span>
         <span className="text-sm font-medium">{Math.round(progress)}%</span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-secondary">
         <div 
           className="h-full bg-primary transition-all duration-500 ease-out"
-          style={{ width: `${progress}%` }}
+          style={{ width: `${currentQuestionIndex === 0 ? 10 : progress}%` }}
         ></div>
       </div>
     </div>
