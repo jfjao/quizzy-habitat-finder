@@ -8,8 +8,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
-// Coordonnées centrales d'Antananarivo, Madagascar
-const CENTER_COORDINATES = [47.5079, -18.8792];
+// Coordonnées centrales d'Antananarivo, Madagascar - typage explicite en tant que tuple
+const CENTER_COORDINATES: [number, number] = [47.5079, -18.8792];
 
 interface NeighborhoodMapProps {
   propertyType: string;
@@ -20,6 +20,22 @@ interface Neighborhood {
   name: string;
   price: number;
   transactions: number;
+}
+
+// Définition correcte du type GeoJSON Feature conforme à Mapbox
+interface NeighborhoodGeoJSONFeature {
+  type: "Feature";
+  properties: {
+    id: string;
+    name: string;
+    price: number;
+    transactions: number;
+    color: string;
+  };
+  geometry: {
+    type: "Polygon";
+    coordinates: number[][][];
+  };
 }
 
 export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }) => {
@@ -55,7 +71,7 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
       map.current = new mapboxgl.Map({
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/light-v11',
-        center: CENTER_COORDINATES,
+        center: CENTER_COORDINATES, // Maintenant correctement typé comme tuple [lng, lat]
         zoom: 12,
         pitch: 0,
       });
@@ -95,14 +111,14 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
 
   const addNeighborhoodsToMap = (map: mapboxgl.Map, neighborhoods: Neighborhood[]) => {
     // Simuler des données GeoJSON pour les quartiers (dans une implémentation réelle, utilisez de vraies données)
-    const features = neighborhoods.map((neighborhood, index) => {
+    const features: NeighborhoodGeoJSONFeature[] = neighborhoods.map((neighborhood, index) => {
       // Créer des coordonnées aléatoires autour du centre d'Antananarivo pour la simulation
       const randomLng = CENTER_COORDINATES[0] + (Math.random() - 0.5) * 0.1;
       const randomLat = CENTER_COORDINATES[1] + (Math.random() - 0.5) * 0.1;
       
       // Créer un polygone simple pour représenter le quartier
       return {
-        type: 'Feature',
+        type: "Feature", // Correction: type explicite "Feature" au lieu de string
         properties: {
           id: neighborhood.id,
           name: neighborhood.name,
@@ -111,7 +127,7 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
           color: getPriceColor(neighborhood.price)
         },
         geometry: {
-          type: 'Polygon',
+          type: "Polygon", // Correction: type explicite "Polygon" au lieu de string
           coordinates: [createPolygon(randomLng, randomLat, 0.01 + Math.random() * 0.02)]
         }
       };
@@ -203,14 +219,14 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
     if (!map.getSource('neighborhoods')) return;
     
     // Mettre à jour les propriétés des polygones
-    const features = neighborhoods.map((neighborhood, index) => {
+    const features: NeighborhoodGeoJSONFeature[] = neighborhoods.map((neighborhood, index) => {
       // Réutiliser la géométrie existante si possible
       const existingFeature = map.querySourceFeatures('neighborhoods', {
         filter: ['==', ['get', 'id'], neighborhood.id]
       })[0];
       
       const geometry = existingFeature?.geometry || {
-        type: 'Polygon',
+        type: "Polygon" as const,
         coordinates: [createPolygon(
           CENTER_COORDINATES[0] + (Math.random() - 0.5) * 0.1, 
           CENTER_COORDINATES[1] + (Math.random() - 0.5) * 0.1,
@@ -219,7 +235,7 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
       };
       
       return {
-        type: 'Feature',
+        type: "Feature", // Correction: type explicite "Feature" au lieu de string
         properties: {
           id: neighborhood.id,
           name: neighborhood.name,
@@ -227,7 +243,7 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
           transactions: neighborhood.transactions,
           color: getPriceColor(neighborhood.price)
         },
-        geometry
+        geometry: geometry as { type: "Polygon"; coordinates: number[][][] }
       };
     });
 
@@ -239,9 +255,9 @@ export const NeighborhoodMap: React.FC<NeighborhoodMapProps> = ({ propertyType }
   };
 
   // Fonction utilitaire pour créer un polygone
-  const createPolygon = (centerLng: number, centerLat: number, radius: number) => {
+  const createPolygon = (centerLng: number, centerLat: number, radius: number): number[][] => {
     const points = 6;
-    const coords = [];
+    const coords: number[][] = [];
     
     for (let i = 0; i < points; i++) {
       const angle = (i / points) * Math.PI * 2;
