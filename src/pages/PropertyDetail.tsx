@@ -6,8 +6,8 @@ import AlertForm from '../components/alerts/AlertForm';
 import { toast } from 'sonner';
 import { Layout } from '../components/layout/Layout';
 import { formatAriary } from '../utils/formatters';
+import VisitScheduler from '../components/visits/VisitScheduler';
 
-// Données fictives
 const allProperties = [
   {
     id: 1,
@@ -291,6 +291,8 @@ const PropertyDetail = () => {
                       Contacter l'agence
                     </button>
                   </form>
+                  
+                  {property && <VisitScheduler property={property} />}
                   
                   <div className="mt-4 flex items-center justify-between border-t border-border pt-4">
                     <button
